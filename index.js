@@ -11,30 +11,28 @@ import PropTypes from 'prop-types';
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 const stylesResp = () => {
-    var pr = PixelRatio.get();
     switch (true) {
-        case pr * screenHeight >= 2100:
+        case screenHeight >= 800:
             return style5xP;
-        case pr * screenHeight >= 1900:
+        case screenHeight >= 700:
             return style4xP;
-        case pr * screenHeight >= 1400:
+        case screenHeight >= 600:
             return style3xP;
-        case pr * screenHeight >= 1000:
+        case screenHeight >= 555:
             return style2xP;
         default:
             return style1xP;
     }
 }
 const getMultiplier = () => {
-    var pr = PixelRatio.get();
     switch (true) {
-        case pr * screenHeight >= 2100:
+        case screenHeight >= 800:
             return 0.45;
-        case pr * screenHeight >= 1900:
+        case screenHeight >= 700:
             return 0.5;
-        case pr * screenHeight >= 1400:
+        case screenHeight >= 600:
             return 0.55;
-        case pr * screenHeight >= 1000:
+        case screenHeight >= 555:
             return 0.6;
         default:
             return 0.65;
