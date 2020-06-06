@@ -7,40 +7,14 @@ import Button from './lib/Button';
 import TagItem from './lib/TagItem';
 import utilities from './lib/utilities';
 import PropTypes from 'prop-types';
+import DevicePixels from './DevicePixel';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
-const stylesResp = () => {
-    switch (true) {
-        case screenHeight >= 800:
-            return style5xP;
-        case screenHeight >= 700:
-            return style4xP;
-        case screenHeight >= 600:
-            return style3xP;
-        case screenHeight >= 555:
-            return style2xP;
-        default:
-            return style1xP;
-    }
-}
-const getMultiplier = () => {
-    switch (true) {
-        case screenHeight >= 800:
-            return 0.45;
-        case screenHeight >= 700:
-            return 0.5;
-        case screenHeight >= 600:
-            return 0.55;
-        case screenHeight >= 555:
-            return 0.6;
-        default:
-            return 0.65;
-    }
-}
+
 
 const { height } = Dimensions.get('window');
-const INIT_HEIGHT = height * getMultiplier();
+const INIT_HEIGHT = height * 0.5;
 // create a component
 class Select2 extends Component {
     static defaultProps = {
@@ -135,11 +109,11 @@ class Select2 extends Component {
                 key={idx}
                 onPress={() => this.onItemSelected(item, isSelectSingle)}
                 activeOpacity={0.7}
-                style={[styles.itemWrapper, stylesResp().itemWrapper]}>
-                <Text style={[styles.itemText, stylesResp().itemText, this.defaultFont]}>
+                style={[styles.itemWrapper]}>
+                <Text style={[styles.itemText, this.defaultFont]}>
                     {item.name}
                 </Text>
-                <Icon style={[styles.itemIcon, stylesResp().itemIcon]}
+                <Icon style={[styles.itemIcon, ]}
                     name={item.checked ? 'check-circle-outline' : 'radiobox-blank'}
                     color={item.checked ? colorTheme : '#777777'} size={20} />
             </TouchableOpacity>
@@ -148,7 +122,7 @@ class Select2 extends Component {
     renderEmpty = () => {
         let { listEmptyTitle } = this.props;
         return (
-            <Text style={[styles.empty, stylesResp().empty, this.defaultFont]}>
+            <Text style={[styles.empty, this.defaultFont]}>
                 {listEmptyTitle}
             </Text>
         );
@@ -167,7 +141,7 @@ class Select2 extends Component {
             <TouchableOpacity
                 onPress={this.showModal}
                 activeOpacity={0.7}
-                style={[styles.container, stylesResp().container, style]}>
+                style={[styles.container, style]}>
                 <Modal
                     onBackdropPress={this.closeModal}
                     style={{
@@ -179,9 +153,9 @@ class Select2 extends Component {
                     animationOutTiming={300}
                     hideModalContentWhileAnimating
                     isVisible={show}>
-                    <Animated.View style={[styles.modalContainer, stylesResp().modalContainer, modalStyle, { height: this.animatedHeight }]}>
+                    <Animated.View style={[styles.modalContainer,  modalStyle, { height: this.animatedHeight }]}>
                         <View>
-                            <Text style={[styles.title, stylesResp().title, this.defaultFont, { color: colorTheme }]}>
+                            <Text style={[styles.title, this.defaultFont, { color: colorTheme }]}>
                                 {popupTitle || title}
                             </Text>
                         </View>
@@ -191,7 +165,7 @@ class Select2 extends Component {
                                 ? <TextInput
                                     underlineColorAndroid='transparent'
                                     returnKeyType='done'
-                                    style={[styles.inputKeyword, stylesResp().inputKeyword, this.defaultFont]}
+                                    style={[styles.inputKeyword,  this.defaultFont]}
                                     placeholder={searchPlaceHolderText}
                                     selectionColor={colorTheme}
                                     onChangeText={keyword => this.setState({ keyword })}
@@ -211,7 +185,7 @@ class Select2 extends Component {
                                 : null
                         }
                         <FlatList
-                            style={stylesResp().listOption}
+                            style={styles.listOption}
                             data={this.dataRender || []}
                             keyExtractor={this.keyExtractor}
                             renderItem={this.renderItem}
@@ -228,7 +202,7 @@ class Select2 extends Component {
                                 textColor={colorTheme}
                                 backgroundColor='#fff'
                                 textStyle={buttonTextStyle}
-                                style={[styles.button, stylesResp().button, buttonStyle, { marginRight: 5, marginLeft: 10, borderWidth: 1, borderColor: colorTheme }]} />
+                                style={[styles.button, buttonStyle, { marginRight:  DevicePixels[5], marginLeft: DevicePixels[10], borderWidth: 1, borderColor: colorTheme }]} />
                             <Button
                                 defaultFont={this.defaultFont}
                                 onPress={() => {
@@ -243,7 +217,7 @@ class Select2 extends Component {
                                 title={selectButtonText}
                                 backgroundColor={colorTheme}
                                 textStyle={buttonTextStyle}
-                                style={[styles.button, stylesResp().button, buttonStyle, { marginLeft: 5, marginRight: 10 }]} />
+                                style={[styles.button,  buttonStyle, { marginLeft: 5, marginRight: 10 }]} />
                         </View>
                     </Animated.View>
                 </Modal>
@@ -251,8 +225,8 @@ class Select2 extends Component {
                     preSelectedItem.length > 0
                         ? (
                             isSelectSingle
-                                ? <Text style={[styles.selectedTitle, stylesResp().selectedTitle, this.defaultFont, selectedTitleStyle, { color: '#333' }]}>{preSelectedItem[0].name}</Text>
-                                : <View style={[styles.tagWrapper, stylesResp().tagWrapper]}>
+                                ? <Text style={[styles.selectedTitle,  this.defaultFont, selectedTitleStyle, { color: '#333' }]}>{preSelectedItem[0].name}</Text>
+                                : <View style={[styles.tagWrapper,]}>
                                     {
                                         preSelectedItem.map((tag, index) => {
                                             return (
@@ -281,7 +255,7 @@ class Select2 extends Component {
                                     }
                                 </View>
                         )
-                        : <Text style={[styles.selectedTitle,stylesResp().selectedTitle, this.defaultFont, selectedTitleStyle]}>{title}</Text>
+                        : <Text style={[styles.selectedTitle,this.defaultFont, selectedTitleStyle]}>{title}</Text>
                 }
             </TouchableOpacity>
         );
@@ -294,27 +268,47 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row', alignItems: 'center',
         borderColor: '#cacaca',
+        minHeight: DevicePixels[45],
+        paddingHorizontal:  DevicePixels[16],
+        borderWidth: 1,
+        paddingVertical:  DevicePixels[4]
     },
     modalContainer: {
         backgroundColor: '#fff',
+        paddingTop:  DevicePixels[16],
+        borderTopLeftRadius:  DevicePixels[8],
+        borderTopRightRadius:  DevicePixels[8]
     },
     title: {
-        width: '100%', textAlign: 'center'
+        width: '100%',
+        textAlign: 'center',
+        fontSize:  DevicePixels[15],
+        marginBottom:  DevicePixels[16],
     },
     line: {
         height: 1, width: '100%', backgroundColor: '#cacaca'
     },
     inputKeyword: {
-        borderRadius: 5, borderWidth: 1, borderColor: '#cacaca',
+        borderRadius:  DevicePixels[5], borderWidth: 1, borderColor: '#cacaca',
+        height:  DevicePixels[45],
+        paddingLeft:  DevicePixels[10],
+        marginHorizontal:  DevicePixels[16],
+        marginTop:  DevicePixels[16],
+        fontSize:  DevicePixels[14],
+        paddingVertical: 0
     },
     buttonWrapper: {
-        marginVertical: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'
+        marginVertical:  DevicePixels[16], flexDirection: 'row', alignItems: 'center', justifyContent: 'center'
     },
     button: {
-        flex: 1
+        flex: 1,
+        height:  DevicePixels[45],
+
     },
     selectedTitle: {
-        color: 'gray', flex: 1
+        color: 'gray', flex: 1,
+        fontSize:  DevicePixels[14],
+
     },
     tagWrapper: {
         flexDirection: 'row', flexWrap: 'wrap'
@@ -322,17 +316,33 @@ const styles = StyleSheet.create({
 
     itemWrapper: {
         borderBottomWidth: 1, borderBottomColor: '#eaeaea',
-        flexDirection: 'row', alignItems: 'center'
+        flexDirection: 'row', alignItems: 'center',
+        paddingVertical:  DevicePixels[8],
+
     },
     itemText: {
-        color: '#333', flex: 1
+        color: '#333',
+        flex: 1,
+        fontSize:  DevicePixels[14],
+
     },
     itemIcon: {
-        textAlign: 'right'
+        textAlign: 'right',
+        width:  DevicePixels[26],
+
     },
     empty: {
-         color: 'gray', alignSelf: 'center', textAlign: 'center', 
-    }
+        color: 'gray',
+        alignSelf: 'center',
+        textAlign: 'center',
+        fontSize:  DevicePixels[14],
+        paddingTop:  DevicePixels[16]
+
+    },
+    listOption: {
+        paddingHorizontal:  DevicePixels[24],
+        paddingTop:  DevicePixels[1],
+    },
 });
 
 Select2.propTypes = {
@@ -353,241 +363,5 @@ Select2.propTypes = {
     selectButtonText: PropTypes.string
 }
 
-
-const style1xP = StyleSheet.create({
-    container: {
-        minHeight: 30,
-        paddingHorizontal: 16,
-        borderWidth: 1,
-        paddingVertical: 4
-    },
-    modalContainer: {
-        paddingTop: 16,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
-    },
-    title: {
-        fontSize: 13,
-        marginBottom: 16,
-    },
-    inputKeyword: {
-        height: 30,
-        paddingLeft: 10,
-        marginHorizontal: 16,
-        marginTop: 16,
-        fontSize: 11,
-        paddingVertical: 0
-    },
-    button: {
-        height: 30,
-    },
-    selectedTitle: {
-        fontSize: 11,
-    },
-    listOption: {
-        paddingHorizontal: 24,
-        paddingTop: 1,
-    },
-    itemWrapper: {
-        paddingVertical: 8,
-    },
-    itemText: {
-        fontSize: 12
-    },
-    itemIcon: {
-        width: 20,
-    },
-    empty:{
-        fontSize: 11,paddingTop: 16
-    }
-});
-const style2xP = StyleSheet.create({
-    container: {
-        minHeight: 35,
-        paddingHorizontal: 16,
-        borderWidth: 1,
-        paddingVertical: 4
-    },
-    modalContainer: {
-        paddingTop: 16,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
-    },
-    title: {
-        fontSize: 14,
-        marginBottom: 16,
-    },
-    inputKeyword: {
-        height: 35,
-        paddingLeft: 10,
-        marginHorizontal: 16,
-        marginTop: 16,
-        fontSize: 12,
-        paddingVertical: 0
-    },
-    button: {
-        height: 35,
-    },
-    selectedTitle: {
-        fontSize: 12,
-    },
-    listOption: {
-        paddingHorizontal: 24,
-        paddingTop: 1,
-    },
-    itemWrapper: {
-        paddingVertical: 8,
-    },
-    itemText: {
-        fontSize: 13
-    },
-    itemIcon: {
-        width: 22,
-    },
-    empty:{
-        fontSize: 12,paddingTop: 16
-    }
-});
-const style3xP = StyleSheet.create({
-    container: {
-        minHeight: 40,
-        paddingHorizontal: 16,
-        borderWidth: 1,
-        paddingVertical: 4
-    },
-    modalContainer: {
-        paddingTop: 16,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
-    },
-    title: {
-        fontSize: 15,
-        marginBottom: 16,
-    },
-    inputKeyword: {
-        height: 40,
-        paddingLeft: 10,
-        marginHorizontal: 16,
-        marginTop: 16,
-        fontSize: 13,
-        paddingVertical: 0
-    },
-    button: {
-        height: 40,
-    },
-    selectedTitle: {
-        fontSize: 13,
-    },
-    listOption: {
-        paddingHorizontal: 24,
-        paddingTop: 1,
-    },
-    itemWrapper: {
-        paddingVertical: 8,
-    },
-    itemText: {
-        fontSize: 13
-    },
-    itemIcon: {
-        width: 24,
-    },
-    empty:{
-        fontSize: 13,paddingTop: 16
-    }
-});
-const style4xP = StyleSheet.create({
-    container: {
-        minHeight: 45,
-        paddingHorizontal: 16,
-        borderWidth: 1,
-        paddingVertical: 4
-    },
-    modalContainer: {
-        paddingTop: 16,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
-    },
-    title: {
-        fontSize: 16,
-        marginBottom: 16,
-    },
-    inputKeyword: {
-        height: 45,
-        paddingLeft: 10,
-        marginHorizontal: 16,
-        marginTop: 16,
-        fontSize: 14,
-        paddingVertical: 0
-    },
-    button: {
-        height: 45,
-    },
-    selectedTitle: {
-        fontSize: 14,
-    },
-    listOption: {
-        paddingHorizontal: 24,
-        paddingTop: 1,
-    },
-    itemWrapper: {
-        paddingVertical: 8,
-    },
-    itemText: {
-        fontSize: 14
-    },
-    itemIcon: {
-        width: 26,
-    },
-    empty:{
-        fontSize: 14,paddingTop: 16
-    }
-});
-const style5xP = StyleSheet.create({
-    container: {
-        minHeight: 45,
-        paddingHorizontal: 16,
-        borderWidth: 1,
-        paddingVertical: 4
-    },
-    modalContainer: {
-        paddingTop: 16,
-        borderTopLeftRadius: 8,
-        borderTopRightRadius: 8
-    },
-    title: {
-        fontSize: 17,
-        marginBottom: 16,
-    },
-    inputKeyword: {
-        height: 45,
-        paddingLeft: 10,
-        marginHorizontal: 16,
-        marginTop: 16,
-        fontSize: 15,
-        paddingVertical: 0
-    },
-    button: {
-        height: 45,
-    },
-    selectedTitle: {
-        fontSize: 15,
-    },
-    listOption: {
-        paddingHorizontal: 24,
-        paddingTop: 1,
-    },
-    itemWrapper: {
-        paddingVertical: 8,
-    },
-    itemText: {
-        fontSize: 15
-    },
-    itemIcon: {
-        width: 28,
-    },
-    empty:{
-        fontSize: 15,paddingTop: 16
-    }
-});
 //make this component available to the app
 export default Select2;
