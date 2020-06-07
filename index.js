@@ -7,11 +7,7 @@ import Button from './lib/Button';
 import TagItem from './lib/TagItem';
 import utilities from './lib/utilities';
 import PropTypes from 'prop-types';
-import DevicePixels from './DevicePixel';
-
-const screenWidth = Math.round(Dimensions.get('window').width);
-const screenHeight = Math.round(Dimensions.get('window').height);
-
+import {dp} from '../lib/DevicePixel';
 
 const { height } = Dimensions.get('window');
 const INIT_HEIGHT = height * 0.5;
@@ -202,7 +198,7 @@ class Select2 extends Component {
                                 textColor={colorTheme}
                                 backgroundColor='#fff'
                                 textStyle={buttonTextStyle}
-                                style={[styles.button, buttonStyle, { marginRight:  DevicePixels[5], marginLeft: DevicePixels[10], borderWidth: 1, borderColor: colorTheme }]} />
+                                style={[styles.button, buttonStyle, { marginRight:  dp(5), marginLeft: dp(10), borderWidth: 1, borderColor: colorTheme }]} />
                             <Button
                                 defaultFont={this.defaultFont}
                                 onPress={() => {
@@ -268,46 +264,46 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row', alignItems: 'center',
         borderColor: '#cacaca',
-        minHeight: DevicePixels[45],
-        paddingHorizontal:  DevicePixels[16],
+        minHeight: dp(45),
+        paddingHorizontal:  dp(16),
         borderWidth: 1,
-        paddingVertical:  DevicePixels[4]
+        paddingVertical:  dp(4)
     },
     modalContainer: {
         backgroundColor: '#fff',
-        paddingTop:  DevicePixels[16],
-        borderTopLeftRadius:  DevicePixels[8],
-        borderTopRightRadius:  DevicePixels[8]
+        paddingTop:  dp(16),
+        borderTopLeftRadius:  dp(8),
+        borderTopRightRadius:  dp(8)
     },
     title: {
         width: '100%',
         textAlign: 'center',
-        fontSize:  DevicePixels[15],
-        marginBottom:  DevicePixels[16],
+        fontSize:  dp(15),
+        marginBottom:  dp(16),
     },
     line: {
         height: 1, width: '100%', backgroundColor: '#cacaca'
     },
     inputKeyword: {
-        borderRadius:  DevicePixels[5], borderWidth: 1, borderColor: '#cacaca',
-        height:  DevicePixels[45],
-        paddingLeft:  DevicePixels[10],
-        marginHorizontal:  DevicePixels[16],
-        marginTop:  DevicePixels[16],
-        fontSize:  DevicePixels[14],
+        borderRadius:  dp(5), borderWidth: 1, borderColor: '#cacaca',
+        height:  dp(45),
+        paddingLeft:  dp(10),
+        marginHorizontal:  dp(16),
+        marginTop:  dp(16),
+        fontSize:  dp(14),
         paddingVertical: 0
     },
     buttonWrapper: {
-        marginVertical:  DevicePixels[16], flexDirection: 'row', alignItems: 'center', justifyContent: 'center'
+        marginVertical:  dp(16), flexDirection: 'row', alignItems: 'center', justifyContent: 'center'
     },
     button: {
         flex: 1,
-        height:  DevicePixels[45],
+        height:  dp(45),
 
     },
     selectedTitle: {
         color: 'gray', flex: 1,
-        fontSize:  DevicePixels[14],
+        fontSize:  dp(14),
 
     },
     tagWrapper: {
@@ -317,31 +313,31 @@ const styles = StyleSheet.create({
     itemWrapper: {
         borderBottomWidth: 1, borderBottomColor: '#eaeaea',
         flexDirection: 'row', alignItems: 'center',
-        paddingVertical:  DevicePixels[8],
+        paddingVertical:  dp(8),
 
     },
     itemText: {
         color: '#333',
         flex: 1,
-        fontSize:  DevicePixels[14],
+        fontSize:  dp(14),
 
     },
     itemIcon: {
         textAlign: 'right',
-        width:  DevicePixels[26],
+        width:  dp(26),
 
     },
     empty: {
         color: 'gray',
         alignSelf: 'center',
         textAlign: 'center',
-        fontSize:  DevicePixels[14],
-        paddingTop:  DevicePixels[16]
+        fontSize:  dp(14),
+        paddingTop:  dp(16)
 
     },
     listOption: {
-        paddingHorizontal:  DevicePixels[24],
-        paddingTop:  DevicePixels[1],
+        paddingHorizontal:  dp(24),
+        paddingTop:  dp(1),
     },
 });
 
