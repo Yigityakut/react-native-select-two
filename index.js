@@ -7,7 +7,7 @@ import Button from './lib/Button';
 import TagItem from './lib/TagItem';
 import utilities from './lib/utilities';
 import PropTypes from 'prop-types';
-import {dp} from '../lib/DevicePixel';
+import {dp} from './lib/DevicePixel';
 
 const { height } = Dimensions.get('window');
 const INIT_HEIGHT = height * 0.5;
